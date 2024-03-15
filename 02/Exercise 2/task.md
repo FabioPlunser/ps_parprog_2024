@@ -19,10 +19,10 @@
     - $10 * ((1-p) + (p/64)) = 1$
     - $(1-p) + (p/64) = 0,1$
     - $64 - 64p + p = 6,4$
-    - $ - 64p + p = 6,4 - 64$
-    - $ - 63p = -57,6$
-    - $ 63p = 57,6$
-    - $ p = 0,914286$
-    - $ p = 91,43\%$   
+    - $-64p + p = 6,4 - 64$
+    - $-63p = -57,6$
+    - $63p = 57,6$
+    - $p = 0,914286$
+    - $p = 91,43\\%$   
     So the unparallelizable, sequential region can be at most 8,57% of the program for a speedup of 10 using 64 cores.
     The time complexity of the algorithm if for the most part not relevant for the calculation of the unparallelizable, sequential region. The time complexity only tells us how the runtime of the program scales with the input size. The unparallelizable, sequential region is a property of the program itself and not of the input size.
