@@ -1,0 +1,19 @@
+Metric;Column;Row
+I refs;29207186;29207156
+I1 misses;1028;1026
+LLi misses;995;993
+I1 miss rate;0.00%;0.00%
+LLi miss rate;0.00%;0.00%
+D refs ;15070361;15070358
+D1 misses;3002312;189793
+LLd misses ;189331;189331
+D1 miss rate ;19.9% ;1.3%
+LLd miss rate;1.3%;1.3%
+LL refs;3003340;190819
+LL misses;190326;190324
+LL miss rate;0.4%;0.4% 
+LLC-load-misses;33122;2118
+LLC-store-misses;625;0
+Time elapsed (seconds);0.023952257;0.012797035
+User time (seconds);0.016639000;0.004021000
+Sys time (seconds);0.002081000;0.004038000
