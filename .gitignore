@@ -10,3 +10,9 @@
 
 # ignore log output
 *.log
+
+# ignore ZIP files (as likely only created for submissions)
+*.zip
+
+# ignore backup files created by Excel
+~*.xlsx
