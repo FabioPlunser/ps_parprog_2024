@@ -26,6 +26,5 @@ bench_all:
 bench:
 	@for n_threads in $(N_THREADS); do \
 		sbatch --output=logs/$(TARGET).log ./job.sh "$(TARGET) $$n_threads"; \
-		sbatch --output=logs/$(TARGET)_time.log ./job_time.sh "$(TARGET) $$n_threads"; \
 	done
 
