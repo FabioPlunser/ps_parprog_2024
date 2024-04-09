@@ -82,4 +82,4 @@ Command being timed: "./mc_pi_reduction 12"
 
 > Add the wall clock time measurements for 12 threads on LCC3 to the comparison spreadsheet linked on Discord.
 
-Done.
+TODO
