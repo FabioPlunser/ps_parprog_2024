@@ -43,7 +43,7 @@ int main(int argc, char* argv[]) {
 			y = (double)rand_r(&seed) / RND_MAX;
 
 			if(x * x + y * y <= 1.0) {
-#pragma omp critical
+#pragma omp atomic
 				points_inside++;
 			}
 		}

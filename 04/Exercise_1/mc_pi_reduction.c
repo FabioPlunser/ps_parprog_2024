@@ -33,7 +33,7 @@ int main(int argc, char* argv[]) {
 	start_time = omp_get_wtime();
 
 // Calculation
-#pragma omp parallel private(x, y)
+#pragma omp parallel private(x, y) reduction(+:points_inside)
 	{
 		unsigned int seed = omp_get_thread_num();
 
@@ -43,7 +43,6 @@ int main(int argc, char* argv[]) {
 			y = (double)rand_r(&seed) / RND_MAX;
 
 			if(x * x + y * y <= 1.0) {
-#pragma omp critical
 				points_inside++;
 			}
 		}
