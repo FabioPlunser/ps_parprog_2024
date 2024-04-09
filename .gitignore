@@ -1,0 +1,12 @@
+# ignore binaries
+# ignore all
+*
+# unignore all with extension
+!*.*
+# unignore Makefiles
+!Makefile
+# unignore all directories
+!*/
+
+# ignore log output
+*.log
