@@ -11,4 +11,4 @@
 # Enforce exclusive node allocation, do not share with other jobs
 #SBATCH --exclusive
 
-/usr/bin/time -v ./$1
+./$1

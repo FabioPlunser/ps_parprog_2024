@@ -36,8 +36,9 @@ int main(int argc, char* argv[]) {
 // Calculation
 #pragma omp parallel private(x, y)
 	{
-		unsigned int seed = omp_get_thread_num();
-		points_inside_array[omp_get_thread_num()] = 0;
+		unsigned int thread_num = omp_get_thread_num();
+		unsigned int seed = thread_num;
+		points_inside_array[thread_num] = 0;
 
 #pragma omp for
 		for(count_t i = 0; i < num_points; i++) {
@@ -45,7 +46,7 @@ int main(int argc, char* argv[]) {
 			y = (double)rand_r(&seed) / RND_MAX;
 
 			if(x * x + y * y <= 1.0) {
-				points_inside_array[omp_get_thread_num()]++;
+				points_inside_array[thread_num]++;
 			}
 		}
 	}

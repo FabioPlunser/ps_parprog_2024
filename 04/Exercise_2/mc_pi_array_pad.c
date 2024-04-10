@@ -4,6 +4,7 @@
 #include <stdlib.h>
 
 #define RND_MAX 0x7FFFFFFF
+#define CACHE_LINE_SIZE 64
 
 typedef uint32_t count_t;
 
@@ -21,7 +22,7 @@ int main(int argc, char* argv[]) {
 
 	const count_t num_points = ((count_t)700) * 1000 * 1000;
 	count_t points_inside = 0;
-	const count_t spacing = 32;
+	const count_t spacing = CACHE_LINE_SIZE / sizeof(count_t);
 	count_t points_inside_array[num_threads * spacing];
 	double x, y;
 
@@ -37,8 +38,9 @@ int main(int argc, char* argv[]) {
 // Calculation
 #pragma omp parallel private(x, y)
 	{
-		unsigned int seed = omp_get_thread_num();
-		points_inside_array[omp_get_thread_num() * spacing] = 0;
+		unsigned int thread_num = omp_get_thread_num();
+		unsigned int seed = thread_num;
+		points_inside_array[thread_num * spacing] = 0;
 
 #pragma omp for
 		for(count_t i = 0; i < num_points; i++) {
@@ -46,7 +48,7 @@ int main(int argc, char* argv[]) {
 			y = (double)rand_r(&seed) / RND_MAX;
 
 			if(x * x + y * y <= 1.0) {
-				points_inside_array[omp_get_thread_num() * spacing]++;
+				points_inside_array[thread_num * spacing]++;
 			}
 		}
 	}
