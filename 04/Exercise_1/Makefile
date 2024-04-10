@@ -23,8 +23,9 @@ bench_all:
 	done
 
 .PHONY: bench
-bench:
+bench: $(TARGET)
+	$(RM) ./logs/$(TARGET).log
 	@for n_threads in $(N_THREADS); do \
-		sbatch --output=logs/$(TARGET).log ./job.sh "$(TARGET) $$n_threads"; \
+		sbatch --output=logs/$(TARGET).log --open-mode=append ./job.sh "$(TARGET) $$n_threads"; \
 	done
 

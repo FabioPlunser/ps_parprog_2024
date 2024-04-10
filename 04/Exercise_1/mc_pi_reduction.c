@@ -33,7 +33,7 @@ int main(int argc, char* argv[]) {
 	start_time = omp_get_wtime();
 
 // Calculation
-#pragma omp parallel private(x, y) reduction(+:points_inside)
+#pragma omp parallel private(x, y) reduction(+ : points_inside)
 	{
 		unsigned int seed = omp_get_thread_num();
 
