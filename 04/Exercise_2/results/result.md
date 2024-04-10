@@ -37,7 +37,7 @@ Also see [results.png](results.png).
 
 Accumulating local sums before attempting final calculation seems to be the fastest implementation.
 
-Following an array implementation caching seems to hinder performance improvement by increasing the thread number as storing a whole region of the array for some threads makes synchronization between threads necessary.
+Following an array implementation caching seems to hinder performance improvement by increasing the thread number as storing a whole region of the array makes synchronization between threads necessary.
 
 Implementing padding between the array elements containing data resolves that issue and brings performance almost back to the local sum approach's performance. The remaining performance difference would have to be subject to further research.
 
