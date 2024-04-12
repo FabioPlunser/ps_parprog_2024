@@ -69,4 +69,4 @@ In no case has there been an observable, significant difference between array an
 
 > Enter the wall clock time of each version for 12 threads on LCC3 to the comparison spreadsheet linked on Discord.
 
-TODO
+Done
