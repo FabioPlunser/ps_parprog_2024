@@ -30,6 +30,8 @@ def to_markdown(result: Dict[str, List[Tuple[int, float]]]) -> str:
                 if measurement[0] == num_threads:
                     data_row.append(f"{measurement[1]:.3f}s")
                     break
+            else:
+                data_row.append("-")
         data.append(f"| {num_threads} | {' | '.join(data_row)} |")
 
     return "\n".join([header, separator] + data)
