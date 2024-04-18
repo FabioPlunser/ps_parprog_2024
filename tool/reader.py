@@ -1,9 +1,10 @@
 from os import PathLike
 from functools import reduce
+from typing import Dict, List, Tuple
 import os
 
 
-def find_logfiles(directory: PathLike) -> list[PathLike]:
+def find_logfiles(directory: PathLike) -> List[PathLike]:
     """Finds all logfiles in a given directory and returns the paths to the files as a list."""
 
     logfiles = []
@@ -15,13 +16,13 @@ def find_logfiles(directory: PathLike) -> list[PathLike]:
     return logfiles
 
 
-def read_logfile(file: PathLike) -> dict[str, list[tuple[int, float]]]:
+def read_logfile(file: PathLike) -> Dict[str, List[Tuple[int, float]]]:
     """Reads the content of a logfile and extracts the benchmark information, then return it as a dictionary
     where the program name is the key and the value is a list containing tuples with the number of threads and
     the measured runtime, ordered by the number of threads.
     """
 
-    results: dict[str, list[tuple[int, float]]] = {}
+    results: dict[str, List[Tuple[int, float]]] = {}
 
     with open(file, "r") as f:
         lines = f.readlines()
@@ -44,9 +45,9 @@ def read_logfile(file: PathLike) -> dict[str, list[tuple[int, float]]]:
     return results
 
 
-def join_benchmark_results(results: list[dict[str, list[tuple[int, float]]]]) -> dict[str, list[tuple[int, float]]]:
+def join_benchmark_results(results: List[Dict[str, List[Tuple[int, float]]]]) -> Dict[str, List[Tuple[int, float]]]:
     """Joins the benchmark results read from multiple logfiles with `read_logfile()` into a single dictionary."""
-    total_result: dict[str, list[tuple[int, float]]] = {}
+    total_result: Dict[str, List[Tuple[int, float]]] = {}
 
     # join all results into a single dictionary
     for single_result in results:

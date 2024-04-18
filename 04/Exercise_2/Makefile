@@ -26,7 +26,7 @@ bench_all:
 bench: $(TARGET)
 	$(RM) -f ./logs/$(TARGET)
 	@for n_threads in $(N_THREADS); do \
-		sbatch --output=logs/$(TARGET) --open-mode=append ./job.sh "$(TARGET) $$n_threads"; \
+		sbatch --output=logs/$(TARGET).log --open-mode=append ./job.sh "$(TARGET) $$n_threads"; \
 	done
 
 .PHONY: cache_misses_all

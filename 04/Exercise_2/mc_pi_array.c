@@ -66,5 +66,7 @@ int main(int argc, char* argv[]) {
 	printf("Approximation of PI took %.3f seconds with %u threads - value: %.10f\n", elapsed_time,
 	       num_threads, pi_approximation);
 
+	printf("#Benchmark | %s | %u | %.3f\n", argv[0], num_threads, elapsed_time);
+
 	return EXIT_SUCCESS;
 }
