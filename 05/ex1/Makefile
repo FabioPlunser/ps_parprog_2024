@@ -25,6 +25,6 @@ bench_all:
 bench: $(TARGET)
 	$(RM) ./logs/$(TARGET).log
 	@for n_threads in $(N_THREADS); do \
-		sbatch --output=logs/$(TARGET)-$(N_THREADS).log --open-mode=append ./job.sh "$(TARGET) $$n_threads 1500"; \
+		sbatch --output=logs/$(TARGET)-$$n_threads.log ./job.sh "$(TARGET) $$n_threads 1500"; \
 	done
 
