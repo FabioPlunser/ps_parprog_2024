@@ -1,0 +1,3 @@
+[submodule "tool"]
+	path = tool
+	url = https://github.com/EmmArrGee/UIBK-ParProg-BenchmarkSummaryTool.git
