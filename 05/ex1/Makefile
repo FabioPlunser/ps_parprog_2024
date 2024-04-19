@@ -2,7 +2,7 @@ CC=gcc
 CFLAGS=-Wall -Wextra -Wpedantic -Werror -std=c17 -O3 -march=native -g -fopenmp
 LDFLAGS=-lpthread
 
-TARGETS=ex1
+TARGETS=ex1 ex1-improved
 N_THREADS=1 2 4 6 12
 
 .PHONY: all clean bench bench_all

@@ -35,12 +35,19 @@ void free_2d_array(int **arr, long len) {
 
 int main(int argc, char **argv) {
 	// handle input
-	if (argc != 2) {
+	if (argc != 3) {
 		fprintf(stderr, "Error: usage: %s <n>\n", argv[0]);
 		return EXIT_FAILURE;
 	}
+
+	int num_threads = atoi(argv[1]);
+	if(num_threads <= 0) {
+		fprintf(stderr, "Number of threads must be a positive integer\n");
+		return EXIT_FAILURE;
+	}
+
 	errno = 0;
-	char *str = argv[1];
+	char *str = argv[2];
 	char *endptr;
 	long n = strtol(str, &endptr, 0);
 	if (errno != 0) {
@@ -77,11 +84,17 @@ int main(int argc, char **argv) {
 		}
 	}
 
-	double start_time = omp_get_wtime();
+	// Set number of OpenMP threads
+	omp_set_num_threads(num_threads);
+
+	// Prepare timing measurement
+	double start_time, end_time, elapsed_time;
+
+	start_time = omp_get_wtime();
 #pragma omp parallel default(none) shared(n, a, b, c, local_res)
 	{
 		// matrix multiplication
-#pragma omp for default(none) shared(n, a, b, c)
+#pragma omp for 
 		for (long i = 0; i < n; ++i) {
 			for (long j = 0; j < n; ++j) {
 				for (long k = 0; k < n; ++k) {
@@ -91,18 +104,40 @@ int main(int argc, char **argv) {
 		}
 
 		// sum of matrix c
-#pragma omp for default(none) shared(n, a, b, c, local_res)
+#pragma omp for 
 		for (long i = 0; i < n; ++i) {
 			for (long j = 0; j < n; ++j) {
 				local_res[omp_get_thread_num()] += c[i][j];
 			}
 		}
 	}
+
+// sum and multiply in one
+// #pragma omp parallel for reduction(+: res) shared(n,a,b,c)
+// {
+// 	for(long i= 0; i <n ; i++){
+// 		for(long j = 0; i < n; j++){
+// 			int temp = 0; 
+// 			for (long k=0; k < n; ++k){
+// 				temp += a[i][k] * b[k][j]
+// 			}
+// 			c[i][j] = temp; 
+// 			res += temp; 
+// 		}
+// 	}
+// }
 	unsigned long res = 0;
 	for (int l = 0; l < omp_get_num_threads(); ++l) {
 		res += local_res[l];
 	}
-	double end_time = omp_get_wtime();
+
+
+
+	end_time = omp_get_wtime();
+	elapsed_time = end_time - start_time;
+
+	// Generate benchmark result output
+	printf("#Benchmark | %s | %u | %.3f\n", argv[0], num_threads, elapsed_time);
 	printf("res: %lu, time: %2.2f seconds\n", res, end_time - start_time);
 
 	// cleanup

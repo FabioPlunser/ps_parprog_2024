@@ -121,6 +121,7 @@ int main(int argc, char** argv) {
 
 	// Generate benchmark result output
 	printf("#Benchmark | %s | %u | %.3f\n", argv[0], num_threads, elapsed_time);
+	printf("res: %lu, time: %2.2f seconds\n", res, end_time - start_time);
 
 	// cleanup
 	free(local_res);
