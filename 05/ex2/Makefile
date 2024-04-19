@@ -1,10 +1,16 @@
-CFLAGS = -std=gnu11 -Wall -Wextra -lm -fopenmp
+CFLAGS = -std=gnu11 -Wall -Wextra -lm -fopenmp -O3
+TARGETS=ex2 ex2_flush ex2_atomic
 
 .PHONY: all
-all: ex2
+all: $(TARGETS)
 
 .PHONY: clean
 clean:
-	$(RM) ex2
+	$(RM) $(TARGETS)
 
-ex2: ex2.c
+%: %.c
+	$(CC) $(CFLAGS) $< -o $@ $(LDFLAGS)
+
+.PHONY: run
+run: $(TARGETS)
+	salloc --exclusive --tasks-per-node=1 --cpus-per-task=1 srun --pty bash
