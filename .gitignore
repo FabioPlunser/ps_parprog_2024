@@ -5,6 +5,8 @@
 !*.*
 # unignore Makefiles
 !Makefile
+# unignore other .gitignore files
+!.gitignore
 # unignore all directories
 !*/
 
