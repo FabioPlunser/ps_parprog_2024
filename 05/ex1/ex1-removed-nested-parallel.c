@@ -79,8 +79,8 @@ int main(int argc, char **argv) {
 	srand(7);
 	for (long i = 0; i < n; ++i) {
 		for (long j = 0; j < n; ++j) {
-			a[i][j] = rand();
-			b[i][j] = rand();
+			a[i][j] = 2;
+			b[i][j] = 2;
 		}
 	}
 
@@ -104,7 +104,7 @@ int main(int argc, char **argv) {
 		}
 
 		// sum of matrix c
-#pragma omp for 
+#pragma omp for
 		for (long i = 0; i < n; ++i) {
 			for (long j = 0; j < n; ++j) {
 				local_res[omp_get_thread_num()] += c[i][j];
@@ -112,20 +112,6 @@ int main(int argc, char **argv) {
 		}
 	}
 
-// sum and multiply in one
-// #pragma omp parallel for reduction(+: res) shared(n,a,b,c)
-// {
-// 	for(long i= 0; i <n ; i++){
-// 		for(long j = 0; i < n; j++){
-// 			int temp = 0; 
-// 			for (long k=0; k < n; ++k){
-// 				temp += a[i][k] * b[k][j]
-// 			}
-// 			c[i][j] = temp; 
-// 			res += temp; 
-// 		}
-// 	}
-// }
 	unsigned long res = 0;
 	for (int l = 0; l < omp_get_num_threads(); ++l) {
 		res += local_res[l];
