@@ -45,7 +45,7 @@ Loop carried true dependency:
 
 Parallelize inner loop. Dependency is carried by outer loop.
 
-As long outer loop is executed sequentially
+As long as outer loop is executed sequentially
 
 - S[1,2] will always be executed before S[3,1]
 - S[1,3] will always be executed before S[3,2]
