@@ -67,3 +67,15 @@ for(int i = 1; i < N; i++) {
     }
 }
 ```
+
+
+| i | j | k | write (a[i+1][j][k-1]) | read (a[i][j][k]) | distance vector | direction vector |
+|---|---|---|---|---|---|---|
+| 1 | 1 | 1 | a[2][1][0] | a[1][1][1] | | |
+| ... |
+| 1 | 2 | 3 | a[2][2][2] -> (source) | a[1][2][3] | | |
+| ... |
+| 2 | 2 | 2 | a[3][2][1] | a[2][2][2] -> (sink) | (1,0,-1) | (<,=,>) |
+| ... |
+
+There is a loop carried true dependency in the code with distance vector (1,0,-1) and direction vector (<,=,>).
