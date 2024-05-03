@@ -53,7 +53,9 @@ for (int i=1; i<=((double)(N+5)/9); i++) {
     for (int j=1; j<=((double)(N+5)/5); j++) {
         A[i*9-5] = 0;
     }
+    j = j*5-5;
 }
+i = i*9-5;
 ```
 
 # Task 3
