@@ -33,7 +33,8 @@ int main(int argc, char** argv) {
 
 	start_time = omp_get_wtime();
 
-	// Code to test
+// Code to test
+#pragma omp parallel for schedule(dynamic)
 	for(size_t i = 0; i < n; ++i) {
 		for(size_t j = 0; j < n; ++j) {
 			c[i][j] = a[i][j] * b[i][j];
