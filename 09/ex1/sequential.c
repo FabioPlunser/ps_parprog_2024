@@ -16,9 +16,9 @@ int main(int argc, char** argv) {
 
 	// Data preparation
 	const size_t num_repetitions = 1000000;
-	DATATYPE* a = malloc(size * sizeof(DATATYPE));
-	DATATYPE* b = malloc(size * sizeof(DATATYPE));
-	DATATYPE* c = malloc(size * sizeof(DATATYPE));
+	DATATYPE* a = (DATATYPE*)malloc(size * sizeof(DATATYPE));
+	DATATYPE* b = (DATATYPE*)malloc(size * sizeof(DATATYPE));
+	DATATYPE* c = (DATATYPE*)malloc(size * sizeof(DATATYPE));
 	srand(42);
 	for(size_t i = 0; i < size; i++) {
 		a[i] = 0.0f;
