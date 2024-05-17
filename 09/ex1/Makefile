@@ -13,6 +13,7 @@ all: $(TARGETS)
 clean:
 	$(RM) -f $(TARGETS)
 	$(RM) -rf logs
+	$(RM) -rf perf
 
 sequential: sequential.c
 	$(CC) $(CFLAGS) $< -o $@ $(LDFLAGS)

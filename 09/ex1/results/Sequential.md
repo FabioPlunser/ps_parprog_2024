@@ -1,4 +1,4 @@
-| num_threads | sequential | sequential_vectorized |
+| vector_size | sequential | sequential_vectorized |
 |---|---|---|
 | 16 | 0.016s | 0.005s |
 | 32 | 0.032s | 0.009s |

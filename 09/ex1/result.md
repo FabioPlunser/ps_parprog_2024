@@ -30,7 +30,7 @@ See task 3 for execution time results.
 - Benchmark both versions with `make bench_all`
 - Calculated speedup as execution time without vectorization divided by execution time with vectorization
 
-| num_threads | sequential | sequential_vectorized | speedup |
+| vector_size | sequential | sequential_vectorized | speedup |
 |---|---|---|---|
 | 16 | 0.016s | 0.005s | 3.200 |
 | 32 | 0.032s | 0.009s | 3.556 |
