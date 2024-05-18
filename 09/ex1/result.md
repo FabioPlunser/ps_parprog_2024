@@ -71,4 +71,4 @@ The main performance improvement seems to stem from using single instructions fo
 
 > Enter the wall clock time of the sequential program and the auto-vectorized version with size 2048 and 1e6 repetitions to the spreadsheet linked on Discord.
 
-TODO
+Done
