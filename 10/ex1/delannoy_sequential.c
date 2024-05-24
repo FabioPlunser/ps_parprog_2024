@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+long long int delannoy(long long int** D, size_t m, size_t n);
+
 int main(int argc, char** argv) {
 	if(argc != 2) {
 		fprintf(stderr, "Error: usage: %s <n>\n", argv[0]);
@@ -25,15 +27,7 @@ int main(int argc, char** argv) {
 	start_time = omp_get_wtime();
 
 	// Code to test
-	for(size_t i = 0; i <= n; i++) {
-		for(size_t j = 0; j <= n; j++) {
-			if(i == 0 || j == 0) {
-				D[i][j] = 1;
-			} else {
-				D[i][j] = D[i - 1][j] + D[i - 1][j - 1] + D[i][j - 1];
-			}
-		}
-	}
+	long long int result = delannoy(D, n, n);
 
 	// Timing measurement
 	end_time = omp_get_wtime();
@@ -41,15 +35,23 @@ int main(int argc, char** argv) {
 	elapsed_time = end_time - start_time;
 
 	// Verification
-	printf("Checksum: %lld\n", D[n][n]);
+	printf("Checksum: %lld\n", result);
 
 	// Free Time
 	for(size_t i = 0; i <= n; i++) {
 		free(D[i]);
 	}
+	free(D);
 
 	// Generate benchmark result output
 	printf("#Benchmark | %s | %u | %.3f\n", argv[0], 1, elapsed_time);
 
 	return EXIT_SUCCESS;
+}
+
+long long int delannoy(long long int** D, size_t m, size_t n) {
+	if(n == 0 || m == 0) {
+		return 1;
+	}
+	return delannoy(D, m - 1, n) + delannoy(D, m - 1, n - 1) + delannoy(D, m, n - 1);
 }
