@@ -44,7 +44,7 @@ int main(int argc, char** argv) {
 	free(D);
 
 	// Generate benchmark result output
-	printf("#Benchmark | %s | %u | %.3f\n", argv[0], 1, elapsed_time);
+	printf("#Benchmark | %s | %lu | %.3f\n", argv[0], n, elapsed_time);
 
 	return EXIT_SUCCESS;
 }

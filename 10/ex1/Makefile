@@ -4,9 +4,9 @@ LDFLAGS=-lpthread
 
 TARGETS=delannoy_sequential delannoy_parallel
 N_THREADS=1 12
-N=3 4 5 6 7 8 9 10 11 12 13 14 15
+N=3 4 5 6 7 8 9 10 11 12
 
-.PHONY: all clean bench bench_all
+.PHONY: all clean bench_seq bench_par bench_all result
 
 all: $(TARGETS)
 
@@ -19,23 +19,23 @@ clean:
 
 bench_all:
 	$(RM) -rf logs
-	$(MAKE) bench_seq delannoy_sequential; \
-	$(MAKE) bench_par delannoy_parallel; \
+	$(MAKE) bench_seq; \
+	$(MAKE) bench_par; \
 
 
-bench_seq: $(TARGET)
+bench_seq: 
 	@for n in $(N); do \
-		sbatch --output=logs/delannoy_sequential/delannoy_sequential-$$n.log ./job.sh "delannoy_sequential $$n"; \
+		sbatch --output=logs/delannoy_sequential-$$n.log ./job.sh "delannoy_sequential $$n"; \
 	done
 
-bench_par: $(TARGET)
+bench_par: 
 	@for n_threads in $(N_THREADS); do \
 		for n in $(N); do \
-			sbatch --output=logs/delannoy_parallel/delannoy_parallel-$$n-$$n_threads.log ./job.sh "delannoy_parallel $$n_threads $$n"; \
+			sbatch --output=logs/delannoy_parallel-$$n-$$n_threads.log ./job.sh "delannoy_parallel $$n_threads $$n"; \
 		done \
 	done
 
+
 result:
-	@for n in $(N); do \
-		python3 ../../tool/summarize.py --title "delannoy N=$$n²" --input ./logs/$$n --output ./results/$$n; \
-	done
+	timeout 2s python3 ../../tool/summarize.py --title "Delannoy" --input ./logs/ --output ./results/ || true
+	sed -i 's/num_threads/size/g' ./results/Delannoy.md

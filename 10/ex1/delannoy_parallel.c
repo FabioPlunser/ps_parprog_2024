@@ -26,46 +26,41 @@ int main(int argc, char** argv) {
 	double start_time, end_time, elapsed_time;
 
 	start_time = omp_get_wtime();
+	long long int result;
 
 	// Code to test
 #pragma omp parallel
-#pragma omp single {
-	long long int result = delannoy(D, n, n);
-}
+#pragma omp single
+	result = delannoy(D, n, n);
 
-// Timing measurement
-end_time = omp_get_wtime();
+	// Timing measurement
+	end_time = omp_get_wtime();
 
-elapsed_time = end_time - start_time;
+	elapsed_time = end_time - start_time;
 
-// Verification
-printf("Checksum: %lld\n", result);
+	// Verification
+	printf("Checksum: %lld\n", result);
 
-// Free Time
-for(size_t i = 0; i <= n; i++) {
-	free(D[i]);
-}
-free(D);
-// Generate benchmark result output
-printf("#Benchmark | %s | %u | %.3f\n", argv[0], num_threads, elapsed_time);
+	// Free Time
+	for(size_t i = 0; i <= n; i++) {
+		free(D[i]);
+	}
+	free(D);
+	// Generate benchmark result output
+	printf("#Benchmark | %s (n_threads=%u) | %lu | %.3f\n", argv[0], num_threads, n, elapsed_time);
 
-return EXIT_SUCCESS;
+	return EXIT_SUCCESS;
 }
 
 long long int delannoy(long long int** D, size_t m, size_t n) {
 	if(n == 0 || m == 0) {
 		return 1;
 	}
+	long long int sum;
 
-#pragma omp task shared(a, D) {
-	long long int a = delannoy(D, m - 1, n);
-}
-#pragma omp task shared(b, D) {
-long long int b = delannoy(D, m - 1, n - 1);
-}
-#pragma omp task shared(c, D) {
-long long int c = delannoy(D, m, n - 1);
-}
+#pragma omp task shared(sum, D) firstprivate(m, n)
+	sum = delannoy(D, m - 1, n) + delannoy(D, m - 1, n - 1) + delannoy(D, m, n - 1);
+
 #pragma omp taskwait
-return a + b + c;
+	return sum;
 }
