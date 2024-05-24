@@ -2,11 +2,13 @@
 
 > Implement a sequential program that computes the Delannoy number for a square 2D grid of size NxN where N is an input parameter for your program. If in doubt, base your implementation on the formula given in the Wikipedia article under "basic recurrence relation". Make sure your program is semantically correct by comparing the result against the Delannoy numbers given in the article.
 
-
+- Done, see [delannoy_sequential.c](delannoy_sequential.c) for the implementation.
 
 # Task 2
 
 > Parallelize your program using OpenMP tasks and benchmark both the sequential and parallel implementation for several N between 3 and ~15. What can you observe?
+
+- Done, see [delannoy_parallel.c](delannoy_parallel.c) for the implementation.
 
 
 
