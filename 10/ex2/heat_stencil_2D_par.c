@@ -59,7 +59,7 @@ int main(int argc, char** argv) {
 	int source_y = N / 4;
 	A[IND(source_x, source_y)] = 273 + 60;
 
-	printf("Initial:");
+	printf("Initial:\n");
 	printTemperature(A, N, N);
 	printf("\n");
 
@@ -74,8 +74,26 @@ int main(int argc, char** argv) {
 	if(!B) PERROR_GOTO(error_b);
 	// for each time step ..
 	for(int t = 0; t < T; t++) {
-		// todo implement heat propagation
-		// todo make sure the heat source stays the same
+#pragma omp parallel for collapse(2)
+		for(int x = 0; x < N; x++) {
+			for(int y = 0; y < N; y++) {
+				if(x == source_x && y == source_y) {
+					B[IND(x, y)] = A[IND(x, y)];
+				} else {
+					double up = (x == 0) ? A[IND(x, y)] : A[IND(x - 1, y)];
+					double down = (x == N - 1) ? A[IND(x, y)] : A[IND(x + 1, y)];
+					double left = (y == 0) ? A[IND(x, y)] : A[IND(x, y - 1)];
+					double right = (y == N - 1) ? A[IND(x, y)] : A[IND(x, y + 1)];
+
+					B[IND(x, y)] = 0.25 * (up + down + left + right);
+				}
+			}
+		}
+
+		// swap the buffers
+		double* temp = A;
+		A = B;
+		B = temp;
 
 		// every 1000 steps show intermediate step
 		if(!(t % 1000)) {
