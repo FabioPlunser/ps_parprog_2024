@@ -14,3 +14,14 @@ Execute `make profile` to obtain performance profile.
 # Task 2
 
 > Discuss the performance profile. What information does it hold and how/why is this useful?
+
+**Flat Profile:**
+This section shows the total time spent in each function, sorted by decreasing order of time. It helps identify the functions that consume the most execution time.
+
+**Call Graph:**
+This section provides more detailed information about how functions call each other, including the time spent in each call chain. It includes:
+
+    - Parents: Functions that call the given function.
+    - Children: Functions called by the given function.
+    - Time: The total time spent in the function and its children.
+    - Self: The time spent in the function itself, excluding its children.

@@ -11,6 +11,9 @@
 # Enforce exclusive node allocation, do not share with other jobs
 #SBATCH --exclusive
 
+# Enable timing measurement by program
+touch timer.flag
+
 ./$1
 
 # Ensure gmon.out is moved to a designated directory if needed
