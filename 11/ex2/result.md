@@ -35,4 +35,4 @@ Execute full benchmark by running `make run`. Generate benchmark output with `ma
 | 10 | 1.788s | - |
 | 12 | 1.879s | 5.553s |
 
-There seems to be a performance decrease after a certain number of threads, likely due to overhead. The performance decrease seems to be caused by the `redis` method. We have not been able to overcome this limitation.
+There seems to be a performance decrease after a certain number of threads, likely due to overhead. The performance decrease seems to be caused by the `resid` method. We have not been able to overcome this limitation.
