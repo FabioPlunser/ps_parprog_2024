@@ -25,3 +25,17 @@ This section provides more detailed information about how functions call each ot
     - Children: Functions called by the given function.
     - Time: The total time spent in the function and its children.
     - Self: The time spent in the function itself, excluding its children.
+
+The functions `resid`, `psinv`, `rprj3` and `interp` seem to be the biggest time consumers with a relatively low call numbers, indicating that there might be loops in there that hold potential for parallelization.
+
+The functions `resid`, `psinv` and `reprj3` seem to regularly call `norm2u3` which also consumes significant computation time, with relatively low call numbers.
+
+It seems likely the five mentioned functions contain parallelizable loops. Due to the consumed computation time, the functions will be optimized in the following order:
+
+1. `resid`
+2. `psinv`
+3. `rprj3`
+4. `interp`
+5. `norm2u3`
+
+The functions `vranlc` and `randlc` are called very often. It does not seem likely that introducing parallelization in these functions will increase performance, as the necessary overhead will likely exceed any performance gained by parallelization.
