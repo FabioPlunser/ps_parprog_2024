@@ -8,6 +8,8 @@ As an example, using `gprof` requires three steps: First, the application needs 
 
 > Obtain a performance profile of the given application by following the steps outlined above.
 
+Execute `make profile` to obtain performance profile.
+
 
 # Task 2
 

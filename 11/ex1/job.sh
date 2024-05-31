@@ -12,3 +12,6 @@
 #SBATCH --exclusive
 
 ./$1
+
+# Ensure gmon.out is moved to a designated directory if needed
+mv gmon.out logs/gmon.out.log

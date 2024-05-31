@@ -1,5 +1,5 @@
 CC=gcc
-CC_FLAGS=-O3 -g3 -lm
+CC_FLAGS=-O3 -g3 -lm -pg
 
 .PHONEY: all
 all: real
@@ -12,9 +12,13 @@ real: $(SRC)
 .PHONEY: clean
 clean:
 	@rm real
+	@rm -rf logs
 
 .PHONEY: run
 run: all
-	@echo "Sequential:"
-	@./real
-	@echo
+	sbatch --output=logs/real.log ./job.sh real
+
+.PHONEY: profile
+profile: run
+	@mkdir -p results
+	gprof real logs/gmon.out.log > results/analysis.txt
