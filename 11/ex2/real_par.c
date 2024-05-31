@@ -442,6 +442,7 @@ static void psinv(void* or, void* ou, int n1, int n2, int n3, double c[4], int k
 	double r1[M], r2[M];
 
 	if(timeron) timer_start(T_psinv);
+#pragma omp parallel for private(i3, i2, i1, r1, r2)
 	for(i3 = 1; i3 < n3 - 1; i3++) {
 		for(i2 = 1; i2 < n2 - 1; i2++) {
 			for(i1 = 0; i1 < n1; i1++) {
@@ -499,6 +500,7 @@ static void resid(void* ou, void* ov, void* or, int n1, int n2, int n3, double a
 	double u1[M], u2[M];
 
 	if(timeron) timer_start(T_resid);
+#pragma omp parallel for private(i3, i2, i1, u1, u2)
 	for(i3 = 1; i3 < n3 - 1; i3++) {
 		for(i2 = 1; i2 < n2 - 1; i2++) {
 			for(i1 = 0; i1 < n1; i1++) {
@@ -573,6 +575,7 @@ static void rprj3(void* or, int m1k, int m2k, int m3k, void* os, int m1j, int m2
 		d3 = 1;
 	}
 
+#pragma omp parallel for private(j3, j2, j1, i3, i2, i1, x1, y1, x2, y2)
 	for(j3 = 1; j3 < m3j - 1; j3++) {
 		i3 = 2 * j3 - d3;
 		for(j2 = 1; j2 < m2j - 1; j2++) {
@@ -636,6 +639,7 @@ static void interp(void* oz, int mm1, int mm2, int mm3, void* ou, int n1, int n2
 
 	if(timeron) timer_start(T_interp);
 	if(n1 != 3 && n2 != 3 && n3 != 3) {
+#pragma omp parallel for private(i3, i2, i1, z1, z2, z3)
 		for(i3 = 0; i3 < mm3 - 1; i3++) {
 			for(i2 = 0; i2 < mm2 - 1; i2++) {
 				for(i1 = 0; i1 < mm1; i1++) {
@@ -692,6 +696,7 @@ static void interp(void* oz, int mm1, int mm2, int mm3, void* ou, int n1, int n2
 			t3 = 0;
 		}
 
+#pragma omp parallel for private(i3, i2, i1)
 		for(i3 = d3; i3 <= mm3 - 1; i3++) {
 			for(i2 = d2; i2 <= mm2 - 1; i2++) {
 				for(i1 = d1; i1 <= mm1 - 1; i1++) {
@@ -720,6 +725,7 @@ static void interp(void* oz, int mm1, int mm2, int mm3, void* ou, int n1, int n2
 			}
 		}
 
+#pragma omp parallel for private(i3, i2, i1)
 		for(i3 = 1; i3 <= mm3 - 1; i3++) {
 			for(i2 = d2; i2 <= mm2 - 1; i2++) {
 				for(i1 = d1; i1 <= mm1 - 1; i1++) {
@@ -797,9 +803,7 @@ static void norm2u3(void* or, int n1, int n2, int n3, double* rnm2, double* rnmu
 		}
 	}
 
-	if(my_rnmu > max_rnmu) {
-		max_rnmu = (my_rnmu > max_rnmu) ? my_rnmu : max_rnmu;
-	}
+	max_rnmu = (my_rnmu > max_rnmu) ? my_rnmu : max_rnmu;
 
 	*rnmu = max_rnmu;
 
@@ -827,6 +831,7 @@ static void comm3(void* ou, int n1, int n2, int n3, int kk) {
 
 	if(timeron) timer_start(T_comm3);
 
+#pragma omp parallel for private(i3, i2)
 	for(i3 = 1; i3 < n3 - 1; i3++) {
 		for(i2 = 1; i2 < n2 - 1; i2++) {
 			u[i3][i2][0] = u[i3][i2][n1 - 2];
@@ -841,6 +846,7 @@ static void comm3(void* ou, int n1, int n2, int n3, int kk) {
 		}
 	}
 
+#pragma omp parallel for private(i2, i1)
 	for(i2 = 0; i2 < n2; i2++) {
 		for(i1 = 0; i1 < n1; i1++) {
 			u[0][i2][i1] = u[n3 - 2][i2][i1];
@@ -1157,6 +1163,7 @@ static void zero3(void* oz, int n1, int n2, int n3) {
 
 	int i1, i2, i3;
 
+#pragma omp parallel for private(i3, i2, i1)
 	for(i3 = 0; i3 < n3; i3++) {
 		for(i2 = 0; i2 < n2; i2++) {
 			for(i1 = 0; i1 < n1; i1++) {

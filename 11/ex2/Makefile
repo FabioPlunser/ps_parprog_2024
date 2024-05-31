@@ -1,7 +1,7 @@
 CC=gcc
-CC_FLAGS=-O3 -g3 -lm -pg -std=c17 -march=native -g -fopenmp
+CC_FLAGS=-O3 -g3 -lm -std=c17 -march=native -g -fopenmp
 
-N_THREADS=1 2 6 12
+N_THREADS=1 2 4 6 8 10 12
 
 .PHONEY: all
 all: real_seq real_par
