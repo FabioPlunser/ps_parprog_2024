@@ -2,6 +2,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define BLOCK_SIZE 64 / sizeof(double)
+
+int min(int a, int b) {
+	return a < b ? a : b;
+}
+
 int main(int argc, char** argv) {
 	if(argc != 3) {
 		fprintf(stderr, "Error: usage: %s <N> <apply tranformation>\n", argv[0]);
@@ -45,10 +51,16 @@ int main(int argc, char** argv) {
 	}
 	// transformed code
 	else {
-		for(int i = 0; i < N; ++i) {
-			for(int j = 0; j < N; ++j) {
-				for(int k = 0; k < N; ++k) {
-					c[i][j] = a[i][k] * b[k][j];
+		for(int ic = 1; ic < N; ic += BLOCK_SIZE) {
+			for(int jc = 1; jc < N; jc += BLOCK_SIZE) {
+				for(int kc = 1; kc < N; kc += BLOCK_SIZE) {
+					for(int i = ic; i < min(N, ic + BLOCK_SIZE - 1); ++i) {
+						for(int j = jc; j < min(N, jc + BLOCK_SIZE - 1); ++j) {
+							for(int k = kc; k < min(N, kc + BLOCK_SIZE - 1); ++k) {
+								c[i][j] = a[i][k] * b[k][j];
+							}
+						}
+					}
 				}
 			}
 		}
