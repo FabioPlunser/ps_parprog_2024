@@ -2,7 +2,7 @@ CC=gcc
 CFLAGS=-Wall -Wextra -Wpedantic -Werror -std=c17 -O3 -march=native -g -fopenmp
 LDFLAGS=-lpthread
 
-TARGETS=loop_unrolling
+TARGETS=loop_unrolling loop_unswitching loop_peeling_fusion loop_tiling
 N=100000000
 
 .PHONY: all clean perf perf_all

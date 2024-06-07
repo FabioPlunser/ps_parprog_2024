@@ -12,28 +12,34 @@ int main(int argc, char** argv) {
 	int apply = atoi(argv[2]);
 
 	int* a = (int*)malloc(N * sizeof(int));
-	int* b = (int*)malloc(N * sizeof(int));
+	unsigned long int sum = 0;
 
 	for(int i = 0; i < N; i++) {
-		a[i] = 0;
-		b[i] = rand() % 1000;
+		a[i] = rand() % 1000;
 	}
 
 	// original
 	if(apply == 0) {
-		for(int i = 0; i < N - 1; ++i) {
-			a[i] = b[i] + b[i + 1];
+		int min = a[0];
+		for(int i = 1; i < N; ++i) {
+			min = (a[i] < min) ? a[i] : min;
+		}
+		for(int i = 0; i < N; ++i) {
+			sum += a[i];
 		}
 	}
 	// transformed code
 	else {
-		for(int i = 0; i < N - 1; ++i) {
-			a[i] = b[i] + b[i + 1];
+		int min = a[0];
+		for(int i = 1; i < N; ++i) {
+			min = (a[i] < min) ? a[i] : min;
+		}
+		for(int i = 0; i < N; ++i) {
+			sum += a[i];
 		}
 	}
 
 	free(a);
-	free(b);
 
 	return EXIT_SUCCESS;
 }
