@@ -33,10 +33,12 @@ int main(int argc, char** argv) {
 	}
 	// transformed code
 	else {
-		for(int i = 0; i < N; ++i) {
-			if(N % 2) {
+		if(N % 2) {
+			for(int i = 0; i < N; ++i) {
 				a[i] = b[i] + 5;
-			} else {
+			}
+		} else {
+			for(int i = 0; i < N; ++i) {
 				a[i] = c[i] + 5;
 			}
 		}

@@ -31,10 +31,8 @@ int main(int argc, char** argv) {
 	// transformed code
 	else {
 		int min = a[0];
-		for(int i = 1; i < N; ++i) {
-			min = (a[i] < min) ? a[i] : min;
-		}
 		for(int i = 0; i < N; ++i) {
+			min = (a[i] < min) ? a[i] : min;
 			sum += a[i];
 		}
 	}

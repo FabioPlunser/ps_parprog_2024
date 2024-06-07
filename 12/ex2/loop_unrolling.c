@@ -9,6 +9,10 @@ int main(int argc, char** argv) {
 	}
 
 	int N = atoi(argv[1]);
+	// ensure that N is odd
+	if(N % 2 == 0) {
+		N += 1;
+	}
 	int apply = atoi(argv[2]);
 
 	int* a = (int*)malloc(N * sizeof(int));
@@ -27,8 +31,9 @@ int main(int argc, char** argv) {
 	}
 	// transformed code
 	else {
-		for(int i = 0; i < N - 1; ++i) {
+		for(int i = 0; i < N - 1; i += 2) {
 			a[i] = b[i] + b[i + 1];
+			a[i + 1] = b[i + 1] + b[i + 2];
 		}
 	}
 
