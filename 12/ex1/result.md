@@ -32,7 +32,8 @@ unsigned c2 = 96 * c1;
 
 Strength reduction: Replace multiplication with shift and addition operation. `96 = 32 + 64`
 ```C
-unsigned c2 = (c1 << 5) + (c1 << 6); // 32 * c1 + 64 * c1
+// unsigned c2 = (c1 << 5) + (c1 << 6); // c1 * 32 + c1 * 64 my solution
+unsigned c2 = (c1 * 3) << 5; // c1 * 3 * 32 the solution the compiler uses
 ```
 **d)** `c1` is of type `unsigned`:
 
