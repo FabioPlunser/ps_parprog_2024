@@ -13,27 +13,38 @@ int main(int argc, char** argv) {
 
 	int* a = (int*)malloc(N * sizeof(int));
 	int* b = (int*)malloc(N * sizeof(int));
+	int* c = (int*)malloc(N * sizeof(int));
 
 	for(int i = 0; i < N; i++) {
 		a[i] = 0;
 		b[i] = rand() % 1000;
+		c[i] = rand() % 1000;
 	}
 
 	// original
 	if(apply == 0) {
-		for(int i = 0; i < N - 1; ++i) {
-			a[i] = b[i] + b[i + 1];
+		for(int i = 0; i < N; ++i) {
+			if(N % 2) {
+				a[i] = b[i] + 5;
+			} else {
+				a[i] = c[i] + 5;
+			}
 		}
 	}
 	// transformed code
 	else {
-		for(int i = 0; i < N - 1; ++i) {
-			a[i] = b[i] + b[i + 1];
+		for(int i = 0; i < N; ++i) {
+			if(N % 2) {
+				a[i] = b[i] + 5;
+			} else {
+				a[i] = c[i] + 5;
+			}
 		}
 	}
 
 	free(a);
 	free(b);
+	free(c);
 
 	return EXIT_SUCCESS;
 }
