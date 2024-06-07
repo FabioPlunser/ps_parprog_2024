@@ -29,8 +29,8 @@ void c(unsigned c1) {
 }
 
 void c_solution(unsigned c1) {
-	//unsigned c2 = (c1 << 5) + (c1 << 6); // c1 * 32 + c1 * 64 my solution
-    unsigned c2 = (c1 * 3) << 5;  // c1 * 3 * 32 the solution the compiler uses
+	// unsigned c2 = (c1 << 5) + (c1 << 6); // c1 * 32 + c1 * 64 my solution
+	unsigned c2 = (c1 * 3) << 5; // c1 * 3 * 32 the solution the compiler uses
 	printf("cs): %u\n", c2);
 }
 
@@ -90,7 +90,9 @@ void g(float c1) {
 }
 
 void g_solution(float c1) {
-	float c2 = -c1; // let the compiler handle the rest 
+	//*(int*)&c1 ^= (1 << 31); // Flip the sign bit not save
+	// float c2 = c1;
+	float c2 = -c1; // save way to flip the sign bit, let the compiler do the work
 	printf("gs): %f\n", c2);
 }
 

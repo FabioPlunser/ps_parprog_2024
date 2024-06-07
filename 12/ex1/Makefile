@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-Wall -Wextra -Wpedantic  -std=c17 -march=native -g -O3
+CFLAGS=-Wall -Wextra -Wpedantic -std=c17 -march=native -g -O3
 
 TARGETS=comparisonCode
 
@@ -11,6 +11,6 @@ clean:
 	$(RM) -f $(TARGETS)
 
 %: %.c
-	$(CC) $(CFLAGS) $< -o $@ $(LDFLAGS)
+	$(CC) $(CFLAGS) $< -o $@ 
 
 comparisonCode: comparisonCode.c
