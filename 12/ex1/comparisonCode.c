@@ -55,8 +55,8 @@ void e(unsigned* a) {
 void e_solution(unsigned* a) {
 	unsigned sum_fifth = 0;
 
-	for(int i = 0; i < N / 5; ++i) {
-		sum_fifth += a[5 * i];
+	for(int i = 0; i < N; i += 5) {
+		sum_fifth += a[i];
 	}
 	printf("es): %u\n", sum_fifth);
 }
