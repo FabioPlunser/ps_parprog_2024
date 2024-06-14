@@ -10,7 +10,7 @@
 #define X_MIN -1
 #define Y_MIN -1
 #define Z_MIN -1
-#define MARGIN 0
+#define MARGIN 20
 #define MASS_MIN 1
 #define MASS_MAX 2
 #define VELOCITY_MIN 0
