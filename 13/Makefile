@@ -6,7 +6,6 @@ TARGETS=n_body_simulation_seq n_body_simulation_par
 N_THREADS=1 2 4 6 8 12
 N_PARTICLES=100 200 500 1000 2000 5000
 TIME_STEPS=20 50 100
-USERS="cb761113 cb761130"
 
 .PHONY: all clean bench_seq bench_par bench_all gif_par gif_seq result gif
 
@@ -45,12 +44,12 @@ bench_par: n_body_simulation_par
 gif_seq: n_body_simulation_seq
 	$(RM) -rf data.dat
 	sbatch --output=logs/n_body_simulation_seq_gif-100.log ./job.sh "n_body_simulation_seq 7 300 0"; \
-	$(SH) ./gif_maker.sh $(USERS)
+	$(SH) ./gif_maker.sh 
 
 gif_par: n_body_simulation_par 
 	$(RM) -rf data.dat
 	sbatch --output=logs/n_body_simulation_par_gif-100-12.log ./job.sh "n_body_simulation_par 12 7 300 0"; \
-	$(SH) ./gif_maker.sh $(USERS)
+	$(SH) ./gif_maker.sh 
 
 result:
 	timeout 2s python3 ../../tool/summarize.py --title "n body simulation" --input ./logs/ --output ./results/ || true
