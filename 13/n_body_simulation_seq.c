@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define GRAVITATIONAL_CONSTANT (6.674 * 1e-11)
+#define GRAVITATIONAL_CONSTANT 1
 #define X_MAX 101
 #define Y_MAX 101
 #define Z_MAX 101
@@ -113,6 +113,9 @@ void apply_force(particle* particles, double** forces, size_t number_of_particle
 		double new_velocity[3] = { particles[i].velocity[0] + (forces[i][0] / particles[i].mass),
 			                       particles[i].velocity[1] + (forces[i][1] / particles[i].mass),
 			                       particles[i].velocity[2] + (forces[i][2] / particles[i].mass) };
+		particles[i].velocity[0] = new_velocity[0];
+		particles[i].velocity[1] = new_velocity[1];
+		particles[i].velocity[2] = new_velocity[2];
 		particles[i].position[0] += new_velocity[0];
 		particles[i].position[1] += new_velocity[1];
 		particles[i].position[2] += new_velocity[2];

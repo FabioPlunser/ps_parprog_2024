@@ -4,7 +4,7 @@ LDFLAGS=-lpthread
 
 TARGETS=n_body_simulation_seq n_body_simulation_par
 N_THREADS=1
-N_PARTICLES=10
+N_PARTICLES=1000
 TIME_STEPS=5
 
 .PHONY: all clean bench_seq bench_par bench_all result
