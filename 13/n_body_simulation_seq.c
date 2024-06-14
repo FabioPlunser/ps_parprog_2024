@@ -12,13 +12,13 @@
 #define Z_MIN -1
 #define MARGIN 20
 #define MASS_MIN 1
-#define MASS_MAX 10
-#define VELOCITY_MIN -2
-#define VELOCITY_MAX 2
+#define MASS_MAX 20
+#define VELOCITY_MIN 0
+#define VELOCITY_MAX 0
 
 typedef struct particle {
 	double position[3]; // x, y, z
-	double velocity[3];
+	double velocity[3]; // vx, vy, vz
 	double mass;
 } particle;
 
@@ -26,21 +26,22 @@ double** compute_force(particle* particles, double** forces, size_t number_of_pa
 void apply_force(particle* particles, double** forces, size_t number_of_particles);
 
 int main(int argc, char** argv) {
-	if(argc != 3) {
-		fprintf(stderr, "Error: usage: %s <n> <dt>\n", argv[0]);
+	if(argc != 4) {
+		fprintf(stderr, "Error: usage: %s <n> <dt> <benchmark-flag>\n", argv[0]);
 		return EXIT_FAILURE;
 	}
 
 	size_t number_of_particles = atoi(argv[1]);
 	size_t number_of_time_steps = atoi(argv[2]);
+	size_t benchmark_flag = atoi(argv[3]);
 	// Allocate memory for particles
 	particle* particles = (particle*)malloc(number_of_particles * sizeof(particle));
 
 	// Initialize particles
 	for(size_t i = 0; i < number_of_particles; i++) {
-		particles[i].position[0] = rand() % (X_MAX - X_MIN + 1) + X_MIN - MARGIN;
-		particles[i].position[1] = rand() % (Y_MAX - Y_MIN + 1) + Y_MIN - MARGIN;
-		particles[i].position[2] = rand() % (Z_MAX - Z_MIN + 1) + Z_MIN - MARGIN;
+		particles[i].position[0] = rand() % (X_MAX - X_MIN + 1 - 2 * MARGIN) + X_MIN + MARGIN;
+		particles[i].position[1] = rand() % (Y_MAX - Y_MIN + 1 - 2 * MARGIN) + Y_MIN + MARGIN;
+		particles[i].position[2] = rand() % (Z_MAX - Z_MIN + 1 - 2 * MARGIN) + Z_MIN + MARGIN;
 		particles[i].velocity[0] = rand() % (VELOCITY_MAX - VELOCITY_MIN + 1) + VELOCITY_MIN;
 		particles[i].velocity[1] = rand() % (VELOCITY_MAX - VELOCITY_MIN + 1) + VELOCITY_MIN;
 		particles[i].velocity[2] = rand() % (VELOCITY_MAX - VELOCITY_MIN + 1) + VELOCITY_MIN;
@@ -48,6 +49,9 @@ int main(int argc, char** argv) {
 	}
 
 	double** forces = malloc(number_of_particles * sizeof(double*));
+	for(size_t i = 0; i < number_of_particles; i++) {
+		forces[i] = malloc(3 * sizeof(double));
+	}
 
 	// Prepare timing measurement
 	double start_time, end_time, elapsed_time;
@@ -61,44 +65,42 @@ int main(int argc, char** argv) {
 		// Apply forces
 		apply_force(particles, forces, number_of_particles);
 
-		FILE* fptr = fopen("data.dat", "a");
-		for(size_t i = 0; i < number_of_particles; ++i) {
+		if(benchmark_flag == 0) {
+			FILE* fptr = fopen("data.dat", "a");
 			if(fptr == NULL) {
-				printf("Could not open file");
-				return 0;
+				return 1;
 			}
-			fprintf(fptr, "%f %f %f\n", particles[i].position[0], particles[i].position[1],
-			        particles[i].position[2]);
+			for(size_t i = 0; i < number_of_particles; ++i) {
+				fprintf(fptr, "%f %f %f\n", particles[i].position[0], particles[i].position[1],
+				        particles[i].position[2]);
+			}
+			fprintf(fptr, "\n\n");
+			fclose(fptr);
 		}
-		fprintf(fptr, "\n\n");
-		fclose(fptr);
 	}
 
 	// Stop timing measurement
 	end_time = omp_get_wtime();
-
 	elapsed_time = end_time - start_time;
 
 	// Free memory
 	for(size_t i = 0; i < number_of_particles; i++) {
 		free(forces[i]);
 	}
-	// Print particle positions in desired format
 	free(forces);
-
-	// Free memory
 	free(particles);
 
-	// Generate benchmark result output
-	printf("#Benchmark | %s | %lu | %lu | %.3f\n", argv[0], number_of_particles,
-	       number_of_time_steps, elapsed_time);
+	if(benchmark_flag == 1) {
+		// Generate benchmark result output
+		printf("#Benchmark | %s | %lu | %lu | %.3f\n", argv[0], number_of_particles,
+		       number_of_time_steps, elapsed_time);
+	}
 
 	return EXIT_SUCCESS;
 }
 
 double** compute_force(particle* particles, double** forces, size_t number_of_particles) {
 	for(size_t i = 0; i < number_of_particles; i++) {
-		forces[i] = malloc(3 * sizeof(double));
 		double force[3] = { 0 };
 		for(size_t j = 0; j < number_of_particles; j++) {
 			if(i != j) {
