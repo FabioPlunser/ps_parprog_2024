@@ -3,9 +3,9 @@ CFLAGS=-Wall -Wextra -Wpedantic -Werror -std=c17 -march=native -g -fopenmp -lm
 LDFLAGS=-lpthread
 
 TARGETS=n_body_simulation_seq n_body_simulation_par
-N_THREADS=1
-N_PARTICLES=1000
-TIME_STEPS=5
+N_THREADS=1 12
+N_PARTICLES=100
+TIME_STEPS=100
 
 .PHONY: all clean bench_seq bench_par bench_all result
 
