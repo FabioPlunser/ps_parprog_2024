@@ -21,17 +21,63 @@ See [n_body_simulation_seq.c](./n_body_simulation_seq.c)
 
 > Measure the execution time for various particle numbers and timesteps. What can you observe?
 
+## Number of particles
 
+| num_particles | n_body_simulation_seq |
+|---|---|
+| 100 | 0.053s |
+| 200 | 0.211s |
+| 500 | 1.322s |
+| 1000 | 5.309s |
+| 5000 | 131.843s |
+| 2000 | 21.168s |
+
+![Runtime-over-number-of-particles.png](./results/Runtime-over-number-of-particles.png)
+
+NOTE: X-axis shows number of particles, not number of threads
+
+Runtime grows exponentially with number of particles.
+
+## Number of timesteps
+
+| num_timesteps | n_body_simulation_seq |
+|---|---|
+| 20 | 25.464s |
+| 50 | 65.651s |
+| 100 | 131.843s |
+
+![Runtime-over-number-of-timesteps.png](./results/Runtime-over-number-of-timesteps.png)
+
+NOTE: X-axis shows number of timesteps, not number of threads
+
+Runtime grows linearly with number of timesteps.
 
 # Task 3
 
 > Implement a parallel version the n-body simulation. Optimize your code as much as possible, consider all the optimizations that we discussed in this course. Which optimizations are suitable for this kind of problem? Benchmark your optimized version for multiple numbers of threads and discuss the results.
 
+See [n_body_simulation_par.c](./n_body_simulation_par.c)
+
+| num_threads | n_body_simulation_par | n_body_simulation_seq |
+|---|---|---|
+| 1 | 133.409s | 131.843s |
+| 2 | 67.500s | - |
+| 4 | 33.736s | - |
+| 6 | 23.238s | - |
+| 8 | 17.486s | - |
+| 12 | 11.779s | 131.843s |
+
+![Runtime-over-number-of-threads.png](./results/Runtime-over-number-of-threads.png)
+
 # Task 4
 
 > Write your data to a file (e.g. `data.dat` ) and use any visualization tool to visualize the movement of the data.
+
+See [data.dat](./data.dat) and [output.gif](./output.gif).
 
 # Task 5
 
 > For measuring performance either disable writing to a datafile or consider not dumping each timestep.
 > Benchmark the sequential program and the parallelized version using 5000 particles and 100 time steps for 12 threads on LCC3 and enter the results in the comparison spreadsheet linked on Discord.
+
+Done.
