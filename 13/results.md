@@ -21,6 +21,8 @@ See [n_body_simulation_seq.c](./n_body_simulation_seq.c)
 
 > Measure the execution time for various particle numbers and timesteps. What can you observe?
 
+
+
 # Task 3
 
 > Implement a parallel version the n-body simulation. Optimize your code as much as possible, consider all the optimizations that we discussed in this course. Which optimizations are suitable for this kind of problem? Benchmark your optimized version for multiple numbers of threads and discuss the results.
