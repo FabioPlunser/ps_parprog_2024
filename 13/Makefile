@@ -44,12 +44,12 @@ bench_par: n_body_simulation_par
 gif_seq: n_body_simulation_seq
 	$(RM) -rf data.dat
 	sbatch --output=logs/n_body_simulation_seq_gif-100.log ./job.sh "n_body_simulation_seq 7 300 0"; \
-	$(SH) ./gif_maker.sh 
+	$(SH) ./wait_job.sh "gif" 
 
 gif_par: n_body_simulation_par 
 	$(RM) -rf data.dat
 	sbatch --output=logs/n_body_simulation_par_gif-100-12.log ./job.sh "n_body_simulation_par 12 7 300 0"; \
-	$(SH) ./gif_maker.sh 
+	$(SH) ./wait_job.sh "gif" 
 
 result:
 	timeout 2s python3 ../../tool/summarize.py --title "n body simulation" --input ./logs/ --output ./results/ || true

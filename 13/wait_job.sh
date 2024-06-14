@@ -1,5 +1,6 @@
 #!/bin/bash
 USER=$(id -un)
+MAKE_COMMAND="$@"
 
 while true; do
     sleep 1
@@ -10,4 +11,4 @@ while true; do
 done
 
 sleep 1
-make gif
+make $MAKE_COMMAND
