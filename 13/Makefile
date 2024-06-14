@@ -41,11 +41,11 @@ bench_par:
 
 gif_seq:
 	$(RM) -rf data.dat
-	sbatch --output=logs/n_body_simulation_seq_gif-100.log ./job.sh "n_body_simulation_seq 100 100 0"; \
+	sbatch --output=logs/n_body_simulation_seq_gif-100.log ./job.sh "n_body_simulation_seq 7 300 0"; \
 
 gif_par: 
 	$(RM) -rf data.dat
-	sbatch --output=logs/n_body_simulation_par_gif-100-12.log ./job.sh "n_body_simulation_par 12 100 100 0"; \
+	sbatch --output=logs/n_body_simulation_par_gif-100-12.log ./job.sh "n_body_simulation_par 12 7 300 0"; \
 
 result:
 	timeout 2s python3 ../../tool/summarize.py --title "n body simulation" --input ./logs/ --output ./results/ || true
