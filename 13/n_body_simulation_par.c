@@ -17,7 +17,7 @@
 
 typedef struct particle {
 	double position[3]; // x, y, z
-	double velocity;
+	double velocity[3];
 	double mass;
 } particle;
 
@@ -42,7 +42,9 @@ int main(int argc, char** argv) {
 		particles[i].position[0] = rand() % (X_MAX - X_MIN + 1) + X_MIN - MARGIN;
 		particles[i].position[1] = rand() % (Y_MAX - Y_MIN + 1) + Y_MIN - MARGIN;
 		particles[i].position[2] = rand() % (Z_MAX - Z_MIN + 1) + Z_MIN - MARGIN;
-		particles[i].velocity = rand() % (VELOCITY_MAX - VELOCITY_MIN + 1) + VELOCITY_MIN;
+		particles[i].velocity[0] = rand() % (VELOCITY_MAX - VELOCITY_MIN + 1) + VELOCITY_MIN;
+		particles[i].velocity[1] = rand() % (VELOCITY_MAX - VELOCITY_MIN + 1) + VELOCITY_MIN;
+		particles[i].velocity[2] = rand() % (VELOCITY_MAX - VELOCITY_MIN + 1) + VELOCITY_MIN;
 		particles[i].mass = rand() % (MASS_MAX - MASS_MIN + 1) + MASS_MIN;
 	}
 
