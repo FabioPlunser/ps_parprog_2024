@@ -3,9 +3,9 @@ CFLAGS=-Wall -Wextra -Wpedantic -Werror -std=c17 -march=native -g -fopenmp -lm
 LDFLAGS=-lpthread
 
 TARGETS=n_body_simulation_seq n_body_simulation_par
-N_THREADS=1 12
-N_PARTICLES=5000
-TIME_STEPS=100
+N_THREADS=1 2 4 6 8 12
+N_PARTICLES=100 200 500 1000 2000 5000
+TIME_STEPS=20 50 100
 
 .PHONY: all clean bench_seq bench_par bench_all gif_par gif_seq result gif
 
@@ -26,7 +26,7 @@ bench_all:
 bench_seq: 
 	@for n in $(N_PARTICLES); do \
 		for t in $(TIME_STEPS); do \
-			sbatch --output=logs/n_body_simulation_seq-$$n.log ./job.sh "n_body_simulation_seq $$n $$t 1"; \
+			sbatch --output=logs/n_body_simulation_seq-$$n-$$t.log ./job.sh "n_body_simulation_seq $$n $$t 1"; \
 		done \
 	done
 
@@ -34,7 +34,7 @@ bench_par:
 	@for n_threads in $(N_THREADS); do \
 		for n in $(N_PARTICLES); do \
 			for t in $(TIME_STEPS); do \
-				sbatch --output=logs/n_body_simulation_par-$$n-$$n_threads.log ./job.sh "n_body_simulation_par $$n_threads $$n $$t 1"; \
+				sbatch --output=logs/n_body_simulation_par-$$n-$$t-$$n_threads.log ./job.sh "n_body_simulation_par $$n_threads $$n $$t 1"; \
 			done \
 		done \
 	done
@@ -44,6 +44,7 @@ gif_seq:
 	sbatch --output=logs/n_body_simulation_seq_gif-100.log ./job.sh "n_body_simulation_seq 100 100 0"; \
 
 gif_par: 
+	$(RM) -rf data.dat
 	sbatch --output=logs/n_body_simulation_par_gif-100-12.log ./job.sh "n_body_simulation_par 12 100 100 0"; \
 
 result:
