@@ -14,6 +14,8 @@ all: $(TARGETS)
 clean:
 	$(RM) -f $(TARGETS)
 	$(RM) -rf logs
+	$(RM) -f data.dat
+	$(RM) -f output.gif
 
 %: %.c
 	$(CC) $(CFLAGS) $< -o $@ $(LDFLAGS)
@@ -23,14 +25,14 @@ bench_all:
 	$(MAKE) bench_seq; \
 	$(MAKE) bench_par; \
 
-bench_seq: 
+bench_seq: n_body_simulation_seq
 	@for n in $(N_PARTICLES); do \
 		for t in $(TIME_STEPS); do \
 			sbatch --output=logs/n_body_simulation_seq-$$n-$$t.log ./job.sh "n_body_simulation_seq $$n $$t 1"; \
 		done \
 	done
 
-bench_par: 
+bench_par: n_body_simulation_par
 	@for n_threads in $(N_THREADS); do \
 		for n in $(N_PARTICLES); do \
 			for t in $(TIME_STEPS); do \
@@ -39,17 +41,19 @@ bench_par:
 		done \
 	done
 
-gif_seq:
+gif_seq: n_body_simulation_seq
 	$(RM) -rf data.dat
 	sbatch --output=logs/n_body_simulation_seq_gif-100.log ./job.sh "n_body_simulation_seq 7 300 0"; \
+	$(SH) ./gif_maker.sh 
 
-gif_par: 
+gif_par: n_body_simulation_par 
 	$(RM) -rf data.dat
 	sbatch --output=logs/n_body_simulation_par_gif-100-12.log ./job.sh "n_body_simulation_par 12 7 300 0"; \
+	$(SH) ./gif_maker.sh 
 
 result:
 	timeout 2s python3 ../../tool/summarize.py --title "n body simulation" --input ./logs/ --output ./results/ || true
 	sed -i 's/num_threads/size/g' ./results/n_body_simulation.md
 
-gif:
+gif: 
 	gnuplot particle.plt

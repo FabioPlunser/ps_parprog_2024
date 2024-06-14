@@ -18,3 +18,7 @@
 
 # ignore backup files created by Excel
 ~*.xlsx
+
+# ignore .gif and .dat files
+*.gif
+*.dat
